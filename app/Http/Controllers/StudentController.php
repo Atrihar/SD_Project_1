@@ -9,7 +9,7 @@ use App\Models\Assignment;
 use Carbon\Traits\ToStringFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Auth;
+use Spatie\Backtrace\File;
 
 
 class StudentController extends Controller
@@ -19,9 +19,27 @@ class StudentController extends Controller
         return view('student.pages.dashboard');
     }
 
-    public function group()
+    public function group(Request $req)
     {
-        return view('student.pages.group');
+        $id = $req->session()->get('userid');
+        // dd($id);
+        $group = DB::table('group_members')
+                        ->select('*')
+                        ->where('s_id','=',$id)
+                        ->get();
+        $g_id = $group[0]->group_id;
+        $student_info = DB::table('students')
+                        ->select('*')
+                        ->join('group_members','students.id','=','group_members.s_id')
+                        ->where('group_members.group_id','=',$g_id)
+                        ->get();
+        // dd($student_info);
+        $group_name = DB::table('groups')
+                        ->select('*')
+                        ->where('id','=',$g_id)
+                        ->get();
+        // dd($group_name);
+        return view('student.pages.group',compact('student_info','group_name'));
     }
 
     public function assignment(Request $req)
@@ -133,8 +151,19 @@ class StudentController extends Controller
     public function submit_assignment($id, Request $req)
     {
         $obj = Assignment::find($id);
-        $obj->ans = $req->ans;
+        $file = $req->ans;
+        $filename = time().'.'.$file->getClientOriginalExtension();
+        // dd($filename);
+        // $req->move(public_path('asset'), $filename);
+        // $req->file->move('asset',$filename);
+        $filePath = public_path().'/asset/';
+        $file->move($filePath.$filename);
+
+        // echo $req->file()->storeAs('public/update',$filename);
+
+        $obj->ans = $filename;
         $obj->submission = now();
+
         if ($obj->save()) {
             return redirect('student/assignment');
         }

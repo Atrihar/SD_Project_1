@@ -30,22 +30,27 @@ class SupervisorController extends Controller
         // dd($a);
     }
 
-    public function student(Request $req)
+    public function student(Request $req) // the logic of this fuction is not complete, i skip this for now as it is not a mandatory page from my prespective
     {
 
         $ins_id = $req->session()->get('userid');
+        // dd($ins_id);
+
         $g_id = Group::where('instructor_id', '=', $ins_id)->get('id');
         $group_id = str_replace(
             ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
             "",
             $g_id
         );
+        // dd($group_id);
+
         $std_id = Group_member::where('group_id', '=', $group_id)->get('s_id');
         $student_id = str_replace(
             ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
             "",
             $std_id
         );
+        // dd($std_id);
         $std_detailes = Student::where('id', '=', $student_id)->get();
         // dd($std_detailes);
 

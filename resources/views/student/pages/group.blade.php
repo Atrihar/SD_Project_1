@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h4 class="card-title">My Group</h4>
                     <div class="info">
-                        <h5>Group No: 03 &emsp; Group Name: Ldrago</h5>
+                        <h5>Group Name: {{ $group_name[0]->name }}</h5>
                     </div>
                     <div class="table-responsive">
                         <table class="table table-hover">
@@ -21,27 +21,15 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($student_info as $s)
                                 <tr>
-                                    <td>1234</td>
-                                    <td>Jacob</td>
-                                    <td>jacob@gmail.com</td>
-                                    <td>234</td>
-                                    <td>30</td>
+                                    <td>{{ $s->std_ID }}</td>
+                                    <td>{{ $s->name }}</td>
+                                    <td>{{ $s->email }}</td>
+                                    <td>{{ $s->contact_no }}</td>
+                                    <td>{{ $s->batch }}</td>
                                 </tr>
-                                <tr>
-                                    <td>1123</td>
-                                    <td>Messsy</td>
-                                    <td>Flash@gmial.com</td>
-                                    <td>334</td>
-                                    <td>33</td>
-                                </tr>
-                                <tr>
-                                    <td>2322</td>
-                                    <td>John</td>
-                                    <td>Premier@gmail.com</td>
-                                    <td>45</td>
-                                    <td>36</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

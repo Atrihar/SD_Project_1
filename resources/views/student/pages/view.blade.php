@@ -21,9 +21,11 @@
                     <p>&nbsp;</p>
 
                     <h4>Submit here</h4>
-                    <form action="{{ url('submit_assignment/' . $assignment_detailes[0]->id) }}" method="post">
-                        <div>
-                            <input class="form-control" value="{{ $assignment_detailes[0]->ans }}" type="file" name="ans" id="ans" placeholder="Attach your file here" required>
+                    <form action="{{ url('submit_assignment/' . $assignment_detailes[0]->id) }}" enctype="multipart/form-data" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="ans" >Attach your file here</label>
+                            <input class="form-control" value="{{ $assignment_detailes[0]->ans }}" type="file" name="ans" id="ans" required>
                         </div>
                         {{-- <div>
                             <p>&nbsp;</p>
