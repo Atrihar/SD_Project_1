@@ -1,0 +1,4 @@
+1-> PHP 8.2.0
+2-> composer 2.5.1
+
+>>> DataBase Name sd_pro_1985

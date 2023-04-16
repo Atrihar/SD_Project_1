@@ -91,8 +91,10 @@ Route::get('student/dashboard', [StudentController::class, 'dashboard']);
 Route::get('student/group', [StudentController::class, 'group']);
 Route::get('student/assignment', [StudentController::class, 'assignment']);
 Route::get('student/create_group', [StudentController::class, 'create_group']);
-Route::get('student/view', [StudentController::class, 'view']);
+Route::get('/view/{id}', [StudentController::class, 'view']);
 Route::get('student/addMember', [StudentController::class, 'addMember']);
 
 Route::post('student/newGroup', [StudentController::class, 'newGroup']);
 Route::post('student/add_members', [StudentController::class, 'add_members']);
+
+Route::post('/submit_assignment/{id}', [StudentController::class, 'submit_assignment']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\Group;
 use App\Models\Group_member;
+use App\Models\Assignment;
 use Carbon\Traits\ToStringFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,9 +24,19 @@ class StudentController extends Controller
         return view('student.pages.group');
     }
 
-    public function assignment()
+    public function assignment(Request $req)
     {
-        return view('student.pages.assignment');
+        $id = $req->session()->get('userid');
+        // $id = 5;
+
+        $assignment_info = DB::table('assignments')
+            ->select('*')
+            ->join('group_members', 'assignments.group_id', '=', 'group_members.group_id')
+            ->where('group_members.s_id', '=', $id)
+            ->get();
+
+        // dd($id);
+        return view('student.pages.assignment', compact('assignment_info'));
     }
 
     public function create_group()
@@ -33,9 +44,18 @@ class StudentController extends Controller
         return view('student.pages.create_group');
     }
 
-    public function view()
+    public function view($id, Request $req)
     {
-        return view('student.pages.view');
+        $id = (int)$id;
+        // dd($id);
+
+        $assignment_detailes = DB::table('assignments')
+            ->select('*')
+            ->where('id', '=', $id)
+            ->get();
+
+        // dd($assignment_detailes);
+        return view('student.pages.view', compact('assignment_detailes'));
     }
 
     public function addMember(Request $req)
@@ -83,11 +103,11 @@ class StudentController extends Controller
             ->where('name', '=', $name)
             ->get();
 
-            $group_id = str_replace(
-                ['"','[',']','{','}',':','(',')','i','d'],
-                "",
-                $groupid
-            );
+        $group_id = str_replace(
+            ['"', '[', ']', '{', '}', ':', '(', ')', 'i', 'd'],
+            "",
+            $groupid
+        );
 
         for ($i = 0; $i < $no_std; $i++) {
             $group_member = new Group_member();
@@ -99,7 +119,7 @@ class StudentController extends Controller
 
             //removing all the special caracter
             $s_id = str_replace(
-                ['"','[',']','{','}',':','(',')','i','d'],
+                ['"', '[', ']', '{', '}', ':', '(', ')', 'i', 'd'],
                 "",
                 $sid
             );
@@ -107,5 +127,16 @@ class StudentController extends Controller
             $group_member->save();
         }
         return redirect('student/dashboard');
+    }
+
+
+    public function submit_assignment($id, Request $req)
+    {
+        $obj = Assignment::find($id);
+        $obj->ans = $req->ans;
+        $obj->submission = now();
+        if ($obj->save()) {
+            return redirect('student/assignment');
+        }
     }
 }

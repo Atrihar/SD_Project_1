@@ -17,50 +17,25 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Task</th>
                                     <th>Due</th>
                                     <th>Submission Date</th>
                                     <th>Status</th>
                                     <th>Grade</th>
-                                    <th></th>
                                 </tr>
                             </thead>
+
                             <tbody>
-                                <tr>
-                                    <td>abc</td>
-                                    <td>File</td>
-                                    <td>3.4.23</td>
-                                    <td>2.4.13</td>
+                                @foreach ($assignment_info as $a)
+                                    <td>{{ $a->name }}</td>
+                                    <td>{{ $a->due }}</td>
+                                    <td>{{ $a->submission }}</td>
+                                    <td>{{ $a->status }}</td>
+                                    <td>{{ $a->grade }}</td>
                                     <td>
-                                        <label class="badge badge-danger">Not Accepted</label>
+                                        {{-- {{ url('/edit_instructor/' . $u->id) }} --}}
+                                        <a href="{{ url('/view/' . $a->id) }}" class="btn btn-info btn-sm" role="button">View</a>
                                     </td>
-                                    <td>N/A</td>
-                                    <td><a href="{{ url('student/view') }}" class="btn btn-info btn-sm" role="button">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td>abc</td>
-                                    <td>file</td>
-                                    <td>3.4.23</td>
-                                    <td>2.4.13</td>
-                                    <td>
-                                        <label class="badge badge-success">Approved</label>
-                                    </td>
-                                    <td>A</td>
-                                    <td>
-                                        <a href="{{ url('student/view') }}" class="btn btn-info btn-sm" role="button">View</a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>abc</td>
-                                    <td>file</td>
-                                    <td>3.4.23</td>
-                                    <td>2.4.13</td>
-                                    <td>
-                                        <label class="badge badge-danger">Not Accepted</label>
-                                    </td>
-                                    <td>N/A</td>
-                                    <td><a href="{{ url('student/view') }}" class="btn btn-info btn-sm" role="button">View</a></td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
