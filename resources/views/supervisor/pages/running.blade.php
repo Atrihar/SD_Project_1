@@ -24,10 +24,7 @@
                                         <td>{{ $u->project_name }}</td>
                                         <td>{{ $u->updated_at }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-info btn-sm" role="button">Info</a>
-                                        </td>
-                                        <td>
-                                            <a href="#" class="btn btn-danger btn-sm" role="button">Delete</a>
+                                            <a href="{{ url('/running_group_info/' . $u->id) }}" class="btn btn-info btn-sm" role="button">Info</a>
                                         </td>
                                     </tr>
                                 @endforeach

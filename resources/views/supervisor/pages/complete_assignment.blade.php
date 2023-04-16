@@ -30,6 +30,8 @@
                                         <td>{{ $u->ans }}</td>
                                         <td>{{ $u->updated_at }}</td>
                                         <td>{{ $u->grade }}</td>
+                                        <td><a href="{{ url('/assignment_info/' . $u->id) }}" class="btn btn-info btn-sm"
+                                            role="button">view</a></td>
 
                                     </tr>
                                 @endforeach

@@ -95,6 +95,12 @@ class AdminController extends Controller
         }
     }
 
+    public function delete_group($id)
+    {
+        Group::find($id)->delete();
+        return redirect('admin/all_groups');
+    }
+
 
     // ---------------------->>>>teacher crud operation<<<<----------------------
 

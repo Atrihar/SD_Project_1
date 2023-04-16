@@ -94,9 +94,11 @@ class SupervisorController extends Controller
         return view('supervisor.pages.running', compact('a'));
     }
 
-    public function new_task()
+    public function new_task($id, Request $req)
     {
-        return view('supervisor.pages.new_task');
+        $group = Group::find($id);
+        // dd($group);
+        return view('supervisor.pages.new_task',compact('group'));
     }
 
 
@@ -118,4 +120,62 @@ class SupervisorController extends Controller
         // dd($id);
         return view('supervisor.pages.complete_assignment', compact('assignment'));
     }
+
+    public function running_group_info($id, Request $req)
+    {
+        $group = Group::find($id);
+        // $$id = str_replace(
+        //     ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
+        //     "",
+        //     $std_id
+        // );
+        $x = (int)$id;
+        // dd(gettype($x));
+        $assignment = DB::table('assignments')
+            ->select('*')
+            ->where('group_id', '=', $x)
+            ->get();
+        // dd($assignment);
+        // dd($id);
+        return view('supervisor.pages.running_assignment', compact('assignment','x'));
+    }
+
+
+    public function assignment_info($id, Request $req)
+    {
+        $id = (int)$id;
+        // dd($id);
+
+        $assignment_detailes = DB::table('assignments')
+            ->select('*')
+            ->where('id', '=', $id)
+            ->get();
+
+        // dd($assignment_detailes);
+        return view('supervisor.pages.assignment_info', compact('assignment_detailes'));
+    }
+
+    // public function new_task($id, Request $req){
+
+    // }
+
+    public function crate_assignment($id, Request $req){
+        $obj = new Assignment;
+
+        $file = $req->attachment;
+        $filename = time().'.'.$file->getClientOriginalExtension();
+        $filePath = public_path().'/asset/';
+        $file->move($filePath.$filename);
+
+        $obj->attachment = $filename;
+        $obj->due = $req->due;
+        $obj->name = $req->name;
+        $obj->ques = $req->ques;
+        $obj->group_id = $id;
+        dd($id);
+        // if ($obj->save()) {
+        //     return redirect('/running_group_info');
+        // }
+    }
+
 }

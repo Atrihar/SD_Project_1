@@ -11,26 +11,35 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Group Name</th>
-                                    <th>Project Name</th>
+                                    <th>Name</th>
+                                    <th>Question</th>
+                                    <th>Attachment</th>
+                                    <th>Due</th>
+                                    <th>Ans</th>
+                                    <th>Sumbitted At</th>
                                     <th>Grade</th>
-                                    <th>Completion Date</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($a as $u)
+                                @foreach ($assignment as $u)
                                     <tr>
                                         <td>{{ $u->name }}</td>
-                                        <td>{{ $u->project_name }}</td>
-                                        <td>{{ $u->grade }}</td>
+                                        <td>{{ $u->ques }}</td>
+                                        <td>{{ $u->attachment }}</td>
+                                        <td>{{ $u->due }}</td>
+                                        <td>{{ $u->ans }}</td>
                                         <td>{{ $u->updated_at }}</td>
-                                        <td><a href="{{ url('/completed_group_info/' . $u->id) }}" class="btn btn-info btn-sm"
+                                        <td>{{ $u->grade }}</td>
+                                        <td><a href="{{ url('/assignment_info/' . $u->id) }}" class="btn btn-info btn-sm"
                                                 role="button">view</a></td>
+
                                     </tr>
                                 @endforeach
                             </tbody>
+
                         </table>
+
+                        <a href="{{ url('/new_task/' . $x->id) }}" class="btn btn-info btn-sm" role="button">Create Assignment</a>
                     </div>
                 </div>
             </div>

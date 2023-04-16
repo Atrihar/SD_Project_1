@@ -80,10 +80,14 @@ Route::get('supervisor/dashboard', [SupervisorController::class, 'dashboard']);
 Route::get('supervisor/group_info', [SupervisorController::class, 'group_info']);
 Route::get('supervisor/completed', [SupervisorController::class, 'completed']);
 Route::get('supervisor/running', [SupervisorController::class, 'running']);
-Route::get('supervisor/new_task', [SupervisorController::class, 'new_task']);
 Route::get('supervisor/student', [SupervisorController::class, 'student']);
+Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
+Route::get('/crate_assignment/{id}', [SupervisorController::class, 'create_assignment']);
 
 Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
+Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);
+Route::get('/assignment_info/{id}', [SupervisorController::class, 'assignment_info']);
+// Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
 
 
 // student controller
