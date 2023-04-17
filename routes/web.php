@@ -32,6 +32,7 @@ Route::get('admin/approve/{userId}', [AdminController::class, 'approve']);
 Route::get('admin/group_approval/{userId}', [AdminController::class, 'group_approval']);
 Route::get('/group_info/{id}', [AdminController::class, 'group_info']);
 Route::post('/update_group/{id}', [AdminController::class, 'update_group']);
+Route::get('/delete_group/{id}', [AdminController::class, 'delete_group']);
 
 
 // instructor crud operation --> admin controller

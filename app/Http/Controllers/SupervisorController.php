@@ -36,25 +36,14 @@ class SupervisorController extends Controller
 
         $ins_id = $req->session()->get('userid');
         // dd($ins_id);
-
-        $g_id = Group::where('instructor_id', '=', $ins_id)->get('id');
-        $group_id = str_replace(
-            ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
-            "",
-            $g_id
-        );
-        // dd($group_id);
-
-        $std_id = Group_member::where('group_id', '=', $group_id)->get('s_id');
-        $student_id = str_replace(
-            ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
-            "",
-            $std_id
-        );
-        // dd($std_id);
-        $std_detailes = Student::where('id', '=', $student_id)->get();
+        $std_detailes = DB::table('students')
+                                ->select('students.std_ID', 'students.name', 'students.email', 'students.contact_no', 'students.batch')
+                                ->join('group_members','students.id','=','group_members.s_id')
+                                ->join('groups','group_members.group_id','=','groups.id')
+                                ->join('teachers','groups.instructor_id','=','teachers.id')
+                                ->where('teachers.id','=',$ins_id )
+                                ->get();
         // dd($std_detailes);
-
         return view('supervisor.pages.student', compact('std_detailes'));
     }
 

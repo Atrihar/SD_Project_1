@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Models\Group;
 use App\Models\Student;
 use App\Models\Group_member;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -38,38 +39,19 @@ class AdminController extends Controller
     {
         // get the group id
         $group = Group::find($id);
-        // get the student id belogning to that group
-        $std_id = Group_member::where('group_id', '=', $id)->get('s_id');
-        // removing special caracters to only get the id
-        $student_id = str_replace(
-            ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
-            "",
-            $std_id
-        );
-        // $member = count($student_id);
-        // dd(gettype($student_id));
-        //the student id's are in form of string so creating an array with thoes id's
-        $arr = str_split($student_id);
-        // removing uncessery , from the array
-        $array = \array_filter($arr, static function ($element) {
-            return $element !== ",";
-            //                   ↑
-            // Array value which you want to delete
-        });
-        // $member = count($array);
-        // forming a string with the values
-        $array = implode('', $array);
-        // spliting the array again and finally getting the student id in desired form
-        $arr2 = str_split($array);
-
-        $x = count($arr2);
-        // for ($i=0; $i < $x; $i++) {
-        // }
-
-        $std_detailes = Student::where('id', '=', $arr2)->get();
+        $std_detailes = DB::table('students')
+                            ->select('*')
+                            ->join('group_members','students.id','=','group_members.s_id')
+                            ->join('groups','groups.id','=','group_members.group_id')
+                            ->where('groups.id','=',$id)
+                            ->get();
         // dd($std_detailes);
-        return view('admin.pages.group_info', compact('group','std_detailes'));
-        // return view('admin.pages.group_info', compact('group'));
+        $teachers_detailes = DB::table('teachers')
+                                ->select('teachers.name')
+                                ->join('groups','teachers.id','=','groups.instructor_id')
+                                ->where('groups.id','=',$id)
+                                ->get();
+        return view('admin.pages.group_info', compact('group','std_detailes','teachers_detailes'));
     }
 
 
@@ -88,6 +70,12 @@ class AdminController extends Controller
         $obj->name = $req->name;
         $obj->grade = $req->grade;
         $obj->project_name = $req->project_name;
+        $name = $req->instructor_name;
+        $instructor_id = DB::table('teachers')
+                            ->select('id')
+                            ->where('name','=',$name)
+                            ->get();
+        // dd($name);
         $obj->instructor_id = $req->instructor_id;
 
         if ($obj->save()) {

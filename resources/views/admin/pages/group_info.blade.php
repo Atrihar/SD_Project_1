@@ -18,8 +18,8 @@
                             <p>&nbsp;</p>
                             <h6>Group Instrucor: </h6>
                             <div class="form-group">
-                                <input type="text" name="instructor_id" class="form-control"
-                                    value="{{ $group->instructor_id }}">
+                                <input type="text" name="instructor_name" class="form-control"
+                                    value="{{ $teachers_detailes[0]->name }}">
                             </div>
                         </div>
                         <div class="form-group">
