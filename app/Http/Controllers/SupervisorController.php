@@ -10,6 +10,7 @@ use App\Models\Group;
 use App\Models\Group_member;
 use App\Models\Student;
 use App\Models\Assignment;
+use Illuminate\Support\Facades\Storage;
 
 class SupervisorController extends Controller
 {
@@ -159,7 +160,7 @@ class SupervisorController extends Controller
 
     // }
 
-    public function crate_assignment($id, Request $req){
+    public function crate_assignment(Request $req){
         $obj = new Assignment;
 
         $file = $req->attachment;
@@ -171,11 +172,17 @@ class SupervisorController extends Controller
         $obj->due = $req->due;
         $obj->name = $req->name;
         $obj->ques = $req->ques;
-        $obj->group_id = $id;
-        dd($id);
+        // $obj->group_id = $id;
+        // dd($id);
         // if ($obj->save()) {
         //     return redirect('/running_group_info');
         // }
+    }
+
+    public function view($id){
+        $data = Assignment::find($id);
+        // dd($data);
+        return view('supervisor.pages.view-ans',compact('data'));
     }
 
 }

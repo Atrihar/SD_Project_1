@@ -7,9 +7,9 @@
                 <div class="card-body">
                     <h4 class="card-title">Assignment Form</h4>
                     <p class="card-description">
-                        Create a new assignment for {{ $group->name }}
+                        Create a new assignment for {{ $group->name }} {{$group->id}}
                     </p>
-                    <form method="post" enctype="multipart/form-data" action="{{ url('/crate_assignment/') }}" class="forms-sample">
+                    <form method="post" enctype="multipart/form-data" action="{{ url('/crate_assignment') }}" class="forms-sample">
                         @csrf
                         <div class="form-group row">
                             <label for="assignment_name" class="col-sm-3 col-form-label">Name</label>

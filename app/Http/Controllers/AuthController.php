@@ -52,10 +52,14 @@ class AuthController extends Controller
         $password = $req->password;
         $confirm = $req->cnf_password;
         $role = $req->role;
+        // dd($email);
         if ($password == $confirm) {
             $user_exists = Teacher::where('email', '=', $email)->first();
+            // dd($user_exists);
+            echo "so far";
             if ($user_exists) {
                 return redirect()->back()->with('info', 'User Already Exists');
+                // echo "so far";
             } else {
                 $user = new Teacher();
                 $user->name = $name;
@@ -63,6 +67,7 @@ class AuthController extends Controller
                 $user->password = md5($password);
                 $user->contact_no = $contact_no;
                 $user->role = $role;
+                // dd($user->name);
                 if ($user->save()) {
                     return redirect()->back()->with('info', 'User registered. Waiting for approval');
                 }

@@ -39,7 +39,7 @@
 
                         </table>
 
-                        <a href="{{ url('/new_task/' . $x->id) }}" class="btn btn-info btn-sm" role="button">Create Assignment</a>
+                        <a href="{{ url('/new_task/' . $x) }}" class="btn btn-info btn-sm" role="button">Create Assignment</a>
                     </div>
                 </div>
             </div>

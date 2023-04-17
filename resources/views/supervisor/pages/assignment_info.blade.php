@@ -23,6 +23,7 @@
 
                     <h6>Ans: </h6>
                     <p>{{ $assignment_detailes[0]->ans }}</p>
+                    <a href="{{ url('/view_ans',$assignment_detailes[0]->id) }}"> View </a>
 
 
 
