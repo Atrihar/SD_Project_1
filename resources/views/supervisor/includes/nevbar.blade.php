@@ -14,7 +14,7 @@
       </a>
     </div>
   </div>
-  <div class="navbar-menu-wrapper d-flex align-items-top"> 
+  <div class="navbar-menu-wrapper d-flex align-items-top">
     <ul class="navbar-nav">
       <li class="nav-item font-weight-semibold d-none d-lg-block ms-0">
         <h1 class="welcome-text">Welcome Back, <span class="text-black fw-bold">Atrihar</span></h1>
@@ -36,7 +36,7 @@
           <input type="search" class="form-control" placeholder="Search Here" title="Search here">
         </form>
       </li>
-      <li class="nav-item dropdown"> 
+      <li class="nav-item dropdown">
         <a class="nav-link count-indicator" id="countDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
           <i class="icon-bell"></i>
           <span class="count"></span>
@@ -86,7 +86,7 @@
             <p class="fw-light text-muted mb-0">atrihar.rakeen@icloud.com</p>
           </div>
           <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-account-outline text-primary me-2"></i> My Profile </a>
-          <a class="dropdown-item"><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
+          <a href="{{ url('signout') }}" class="dropdown-item" ><i class="dropdown-item-icon mdi mdi-power text-primary me-2"></i>Sign Out</a>
         </div>
       </li>
     </ul>

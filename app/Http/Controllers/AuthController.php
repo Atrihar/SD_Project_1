@@ -56,9 +56,9 @@ class AuthController extends Controller
         if ($password == $confirm) {
             $user_exists = Teacher::where('email', '=', $email)->first();
             // dd($user_exists);
-            echo "so far";
+            // echo "so far";
             if ($user_exists) {
-                return redirect()->back()->with('info', 'User Already Exists');
+                $user_exists = Teacher::where('email', '=', $email)->first();
                 // echo "so far";
             } else {
                 $user = new Teacher();
@@ -106,6 +106,11 @@ class AuthController extends Controller
     {
         $request->session()->forget(['username', 'userrole']);
         return redirect('admin/login');
+    }
+    public function student_signout(Request $request)
+    {
+        $request->session()->forget(['username', 'user_id', 'userid', 'useremail']);
+        return redirect('student/login');
     }
 
     public function superRegister(Request $req)

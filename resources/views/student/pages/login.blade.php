@@ -45,7 +45,7 @@
                                     <a href="#" class="auth-link text-black">Forgot password?</a>
                                 </div>
                                 <div class="text-center mt-4 fw-light">
-                                    Don't have an account? <a href="#" class="text-primary">Create</a>
+                                    Don't have an account? <a href="{{ url('student/registration') }}" class="text-primary" >Create</a>
                                 </div>
                             </form>
                         </div>

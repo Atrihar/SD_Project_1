@@ -23,23 +23,35 @@ class StudentController extends Controller
     {
         $id = $req->session()->get('userid');
         // dd($id);
-        $group = DB::table('group_members')
-                        ->select('*')
-                        ->where('s_id','=',$id)
-                        ->get();
-        $g_id = $group[0]->group_id;
-        $student_info = DB::table('students')
-                        ->select('*')
-                        ->join('group_members','students.id','=','group_members.s_id')
-                        ->where('group_members.group_id','=',$g_id)
-                        ->get();
-        // dd($student_info);
-        $group_name = DB::table('groups')
-                        ->select('*')
-                        ->where('id','=',$g_id)
-                        ->get();
-        // dd($group_name);
-        return view('student.pages.group',compact('student_info','group_name'));
+        $find = DB::table('group_members')
+            ->select('*')
+            ->where('s_id', '=', $id)
+            ->get();
+        // dd($find[0]->id);
+        if ($find[0]->id == true) {
+
+
+            $group = DB::table('group_members')
+                ->select('*')
+                ->where('s_id', '=', $id)
+                ->get();
+            $g_id = $group[0]->group_id;
+            $student_info = DB::table('students')
+                ->select('*')
+                ->join('group_members', 'students.id', '=', 'group_members.s_id')
+                ->where('group_members.group_id', '=', $g_id)
+                ->get();
+            // dd($student_info);
+            $group_name = DB::table('groups')
+                ->select('*')
+                ->where('id', '=', $g_id)
+                ->get();
+            // dd($group_name);
+            return view('student.pages.group', compact('student_info', 'group_name'));
+        }
+        else{
+            return redirect('student/create_group');
+        }
     }
 
     public function assignment(Request $req)
@@ -152,12 +164,12 @@ class StudentController extends Controller
     {
         $obj = Assignment::find($id);
         $file = $req->ans;
-        $filename = time().'.'.$file->getClientOriginalExtension();
+        $filename = time() . '.' . $file->getClientOriginalExtension();
         // dd($filename);
         // $req->move(public_path('asset'), $filename);
         // $req->file->move('asset',$filename);
-        $filePath = public_path().'/asset/';
-        $file->move($filePath.$filename);
+        $filePath = public_path() . '/asset/';
+        $file->move($filePath . $filename);
 
         // echo $req->file()->storeAs('public/update',$filename);
 

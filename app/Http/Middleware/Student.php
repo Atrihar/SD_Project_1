@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Session;
+use Illuminate\Support\Facades\Session;
 
 class Student
 {
@@ -17,6 +17,9 @@ class Student
     public function handle(Request $request, Closure $next): Response
     {
 
+        if(Session::get('std_id')== true){
+            return redirect('student/dashboard');
+        }
         return $next($request);
     }
 }
