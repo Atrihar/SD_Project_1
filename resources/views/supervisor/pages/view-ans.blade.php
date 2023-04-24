@@ -8,6 +8,8 @@
 </head>
 <body>
     {{-- {{$data->id}} --}}
-    <iframe src="/asset/{{$data->ans}}" frameborder="0"></iframe>
+    {{-- <iframe src="/asset/{{$data->ans}}" frameborder="0"></iframe> --}}
+    <iframe src="{{ asset('asset/'.$data[0]->ans) }}"frameborder="0"></iframe>
+    {{-- <p><a target="_blank" href="{{ asset('asset/'.$assignment_detailes[0]->attachment) }}">File</a></p> --}}
 </body>
 </html>

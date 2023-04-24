@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 
@@ -27,18 +27,19 @@ Route::get('/', function () {
 // auth controller
 
 // this is a login form for supervisor and admin
-Route::get('admin/login', [AuthController::class, 'admin_login']);
+Route::get('/', [AuthController::class, 'admin_login']);
+// Route::get('admin/login', [AuthController::class, 'admin_login']);
 Route::post('admin/adminLogin', [AuthController::class, 'adminLogin']);
 
 // Route::get('supervisor/login', [AuthController::class, 'supervisor_login']);
 Route::get('supervisor/register', [AuthController::class, 'supervisor_register']);
 Route::post('supervisor/super-register', [AuthController::class, 'superRegister']);
-Route::post('supervisor/SuperLogin', [AuthController::class, 'SuperLogin']);
+// Route::post('supervisor/SuperLogin', [AuthController::class, 'SuperLogin']);
 
 Route::get('student/register', [AuthController::class, 'student_register']);
-Route::get('student/login', [AuthController::class, 'student_login']);
+// Route::get('student/login', [AuthController::class, 'student_login']);
 Route::post('student/registration', [AuthController::class, 'studentRegistration']);
-Route::post('student/loginForm', [AuthController::class, 'loginForm']);
+// Route::post('student/loginForm', [AuthController::class, 'loginForm']);
 
 
 Route::middleware(['LoggedIn'])->group(function () {
@@ -97,19 +98,18 @@ Route::middleware(['LoggedIn'])->group(function () {
     Route::get('signout', [AuthController::class, 'signout']);
     Route::get('student_signout', [AuthController::class, 'student_signout']);
 });
-
 Route::get('supervisor/dashboard', [SupervisorController::class, 'dashboard']);
-Route::get('supervisor/student', [SupervisorController::class, 'student']);
-Route::get('supervisor/group_info', [SupervisorController::class, 'group_info']);
-Route::get('supervisor/completed', [SupervisorController::class, 'completed']);
-Route::get('supervisor/running', [SupervisorController::class, 'running']);
-Route::get('supervisor/student', [SupervisorController::class, 'student']);
-Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
-Route::post('/crate_assignment', [SupervisorController::class, 'create_assignment']);
+        Route::get('supervisor/student', [SupervisorController::class, 'student']);
+        Route::get('supervisor/group_info', [SupervisorController::class, 'group_info']);
+        Route::get('supervisor/completed', [SupervisorController::class, 'completed']);
+        Route::get('supervisor/running', [SupervisorController::class, 'running']);
+        Route::get('supervisor/student', [SupervisorController::class, 'student']);
+        Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
+        Route::post('/crate_assignment/{id}', [SupervisorController::class, 'create_assignment']);
 
-Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
-Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);
-Route::get('/assignment_info/{id}', [SupervisorController::class, 'assignment_info']);
-// Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
+        Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
+        Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);
+        Route::get('/assignment_info/{id}', [SupervisorController::class, 'assignment_info']);
+        // Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
 
-Route::get('/view_ans/{id}', [SupervisorController::class, 'view']);
+        Route::get('/view_ans/{id}', [SupervisorController::class, 'view']);

@@ -12,10 +12,12 @@
                     <h6>Question:</h6>
                     <p>
                         {{ $assignment_detailes[0]->ques }}
+                        {{-- {{ $assignment_detailes[0]->attachment }} --}}
                     </p>
+                    {{-- {{ url('publc/asset/'.$assignment_detailes[0]->attachment ) }} --}}
 
-                    <h6>Attachment: </h6>
-                    <p>{{ $assignment_detailes[0]->attachment }}</p>
+                    <h6>Attachment:
+                    <p><a target="_blank" href="{{ asset('asset/'.$assignment_detailes[0]->attachment) }}">File</a></p>
 
                     <p>&nbsp;</p>
                     <p>&nbsp;</p>
@@ -25,7 +27,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="ans" >Attach your file here</label>
-                            <input class="form-control" value="{{ $assignment_detailes[0]->ans }}" type="file" name="ans" id="ans" required>
+                            <input class="form-control"  type="file" name="ans" id="ans" required>
                         </div>
                         {{-- <div>
                             <p>&nbsp;</p>

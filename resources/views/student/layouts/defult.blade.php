@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('student.includes.head')
+    @include('admin.includes.head')
 </head>
 
 <body>
@@ -13,13 +13,13 @@
             @include('student.includes.sidebar')
             <div class="main-panel">
                 @yield('content')
-                @include('student.includes.footer')
+                @include('admin.includes.footer')
             </div>
         </div>
     </div>
 
 
-    @include('student.includes.script')
+    @include('admin.includes.script')
 </body>
 
 </html>

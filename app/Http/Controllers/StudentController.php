@@ -163,13 +163,13 @@ class StudentController extends Controller
     public function submit_assignment($id, Request $req)
     {
         $obj = Assignment::find($id);
-        $file = $req->ans;
+        $file = $req->file('ans');
         $filename = time() . '.' . $file->getClientOriginalExtension();
         // dd($filename);
         // $req->move(public_path('asset'), $filename);
         // $req->file->move('asset',$filename);
         $filePath = public_path() . '/asset/';
-        $file->move($filePath . $filename);
+        $file->move($filePath, $filename);
 
         // echo $req->file()->storeAs('public/update',$filename);
 

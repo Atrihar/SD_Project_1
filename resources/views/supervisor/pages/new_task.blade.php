@@ -1,7 +1,6 @@
 @extends('supervisor.layouts.defult')
 @section('content')
-    <form action="#" method="post">
-        @csrf
+
         <div class="col-md-10 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -9,7 +8,7 @@
                     <p class="card-description">
                         Create a new assignment for {{ $group->name }} {{$group->id}}
                     </p>
-                    <form method="post" enctype="multipart/form-data" action="{{ url('/crate_assignment' . $group->id) }}" class="forms-sample">
+                    <form method="post" enctype="multipart/form-data" action="{{ url('/crate_assignment/' . $group->id) }}" class="forms-sample">
                         @csrf
                         <div class="form-group row">
                             <label for="assignment_name" class="col-sm-3 col-form-label">Name</label>
@@ -43,11 +42,12 @@
                                 Are you sure?
                             </label>
                         </div>
+                        {{-- <a target="_blank" href="{{ asset('asset/1681793735.pdf') }}">File</a> --}}
                         <button type="submit" class="btn btn-success me-2">Assign</button>
                         <button class="btn btn-danger">Cancel</button>
                     </form>
                 </div>
             </div>
         </div>
-    </form>
+
 @endsection

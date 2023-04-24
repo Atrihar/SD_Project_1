@@ -18,16 +18,6 @@ class AuthController extends Controller
         return view('admin.pages.add_admin');
     }
 
-    public function admin_login()
-    {
-        return view('admin.pages.login');
-    }
-
-    public function supervisor_login()
-    {
-        return view('supervisor.pages.login');
-    }
-
     public function supervisor_register()
     {
         return view('supervisor.pages.registration');
@@ -38,21 +28,15 @@ class AuthController extends Controller
         return view('student.pages.register');
     }
 
-    public function student_login()
-    {
-        return view('student.pages.login');
-    }
-
-
     public function adminRegister(Request $req)
     {
         $name = $req->name;
         $email = $req->email;
         $contact_no = $req->contact_no;
         $password = $req->password;
-        $confirm = $req->cnf_password;
+        $confirm = $req->cnf_passward;
         $role = $req->role;
-        // dd($email);
+        // $req->file('')
         if ($password == $confirm) {
             $user_exists = Teacher::where('email', '=', $email)->first();
             // dd($user_exists);
@@ -72,45 +56,16 @@ class AuthController extends Controller
                     return redirect()->back()->with('info', 'User registered. Waiting for approval');
                 }
             }
-        }
-    }
-
-
-    public function adminLogin(Request $req)
-    {
-        $email = $req->email;
-        $password = $req->password;
-        $user = Teacher::where('email', '=', $email)
-            ->where('password', '=', md5($password))
-            ->first();
-
-        if ($user) {
-            if ($user->is_approved == 1) {
-                Session::put('username', $user->name);
-                Session::put('userrole', $user->role);
-                Session::put('userid', $user->id);
-                if ($user->role != 'Admin') {
-                    return redirect('supervisor/dashboard',);
-                } else {
-                    return redirect('admin/dashboard');
-                }
-            } else {
-                return redirect()->back()->with('info', 'User not approved yet.');
-            }
         } else {
-            return redirect()->back()->with('info', 'Invalid email or password');
+            dd('Inside else');
         }
     }
+
 
     public function signout(Request $request)
     {
-        $request->session()->forget(['username', 'userrole']);
-        return redirect('admin/login');
-    }
-    public function student_signout(Request $request)
-    {
-        $request->session()->forget(['username', 'user_id', 'userid', 'useremail']);
-        return redirect('student/login');
+        $request->session()->flush();
+        return redirect('/');
     }
 
     public function superRegister(Request $req)
@@ -138,27 +93,6 @@ class AuthController extends Controller
             }
         }
     }
-
-    // public function SuperLogin(Request $req)
-    // {
-    //     $email = $req->email;
-    //     $password = $req->password;
-    //     $user = Teacher::where('email', '=', $email)
-    //         ->where('password', '=', md5($password))
-    //         ->first();
-    //     if ($user) {
-    //         if ($user->is_approved == 1) {
-    //             Session::put('username', $user->name);
-    //             Session::put('userrole', $user->role);
-    //             return redirect('admin/dashboard');
-    //         } else {
-    //             return redirect()->back()->with('info', 'User not approved yet.');
-    //         }
-    //     } else {
-    //         return redirect()->back()->with('info', 'Invalid email or password');
-    //     }
-    // }
-
 
     public function studentRegistration(Request $req)
     {
@@ -188,25 +122,47 @@ class AuthController extends Controller
         }
     }
 
-
-    public function loginForm(Request $req)
+    public function admin_login()
     {
-        // $email = $req->email;
-        $std_ID = $req->std_ID;
+        return view('login');
+    }
+
+
+    public function adminLogin(Request $req)
+    {
+        $email = $req->email;
         $password = $req->password;
-        $std = Student::where('std_ID', '=', $std_ID)
+        $user = Teacher::where('email', '=', $email)
             ->where('password', '=', md5($password))
             ->first();
-        // dd($std);
-        if ($std) {
+
+        // $std_ID = $req->std_ID;
+        // $password = $req->password;
+        $std = Student::where('email', '=', $email)
+            ->where('password', '=', md5($password))
+            ->first();
+
+        if ($user) {
+            if ($user->is_approved == 1) {
+                Session::put('username', $user->name);
+                Session::put('userrole', $user->role);
+                Session::put('userid', $user->id);
+                if ($user->role != 'Admin') {
+                    return redirect('supervisor/dashboard',);
+                } else {
+                    return redirect('admin/dashboard');
+                }
+            } else {
+                return redirect()->back()->with('info', 'User not approved yet.');
+            }
+        } elseif ($std) {
             Session::put('username', $std->name);
             Session::put('userid', $std->id);
             Session::put('user_id', $std->std_ID);
             Session::put('useremail', $std->email);
             return redirect('student/dashboard');
-        }
-        else{
-            return redirect()->back()->with('info', 'Invalid student ID or password');
+        } else {
+            return redirect()->back()->with('info', 'Invalid email or password');
         }
     }
 }

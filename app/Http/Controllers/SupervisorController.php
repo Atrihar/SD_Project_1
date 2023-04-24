@@ -149,23 +149,26 @@ class SupervisorController extends Controller
 
     // }
 
-    public function crate_assignment(Request $req){
+    public function create_assignment(Request $req, $id){
         $obj = new Assignment;
 
         $file = $req->attachment;
         $filename = time().'.'.$file->getClientOriginalExtension();
         $filePath = public_path().'/asset/';
-        $file->move($filePath.$filename);
-
+        $file->move($filePath,$filename);
+        $obj->group_id = $id;
         $obj->attachment = $filename;
         $obj->due = $req->due;
         $obj->name = $req->name;
         $obj->ques = $req->ques;
-        // $obj->group_id = $id;
+        dd($obj);
+        // $obj->ans = 'NULL';
+        // dd($obj);
+        $obj->group_id = $id;
         // dd($id);
-        // if ($obj->save()) {
-        //     return redirect('/running_group_info');
-        // }
+        if ($obj->save()) {
+            return redirect('/running_group_info');
+        }
     }
 
     public function view($id){

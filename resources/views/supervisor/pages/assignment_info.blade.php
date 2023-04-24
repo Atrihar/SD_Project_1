@@ -22,12 +22,7 @@
                     <p>&nbsp;</p>
 
                     <h6>Ans: </h6>
-                    <p>{{ $assignment_detailes[0]->ans }}</p>
-                    <a href="{{ url('/view_ans',$assignment_detailes[0]->id) }}"> View </a>
-
-
-
-
+                    <p><a target="_blank" href="{{ asset('asset/' . $assignment_detailes[0]->ans) }}">File</a></p>
                 </div>
             </div>
         </div>

@@ -14,8 +14,30 @@ class AdminController extends Controller
 {
     public function dashboard()
     {
-        // $user_id = Auth::teachers()->id;
-        // dd($user_id);
+        // $total_student = DB::table('students')
+        //     ->select(DB::raw("'COUNT'(id) as total_student"))
+        //     ->get();
+
+        // $total_instructor = DB::table('teachers')
+        //     ->select(DB::raw("'COUNT'(id) as total_instructor"))
+        //     ->get();
+
+        // $total_group = DB::table('groups')
+        //     ->select(DB::raw("'COUNT'(id) as total_group"))
+        //     ->get();
+
+        // $unassigned_group = DB::table('groups')
+        //     ->select(DB::raw("'COUNT'(id) as total"))
+        //     ->whereNull('instructor_id')
+        //     ->get();
+
+        // $assigned_group = DB::table('groups')
+        //     ->select(DB::raw("'COUNT'(id) as total"))
+        //     ->whereNotNull('instructor_id')
+        //     ->get();
+
+        // dd($assigned_group);
+        // return view('admin.pages.dashboard', compact('total_student', 'total_instructor', 'total_group', 'unassigned_group', 'assigned_group'));
         return view('admin.pages.dashboard');
     }
 
@@ -40,18 +62,18 @@ class AdminController extends Controller
         // get the group id
         $group = Group::find($id);
         $std_detailes = DB::table('students')
-                            ->select('*')
-                            ->join('group_members','students.id','=','group_members.s_id')
-                            ->join('groups','groups.id','=','group_members.group_id')
-                            ->where('groups.id','=',$id)
-                            ->get();
+            ->select('*')
+            ->join('group_members', 'students.id', '=', 'group_members.s_id')
+            ->join('groups', 'groups.id', '=', 'group_members.group_id')
+            ->where('groups.id', '=', $id)
+            ->get();
         // dd($std_detailes);
         $teachers_detailes = DB::table('teachers')
-                                ->select('teachers.name')
-                                ->join('groups','teachers.id','=','groups.instructor_id')
-                                ->where('groups.id','=',$id)
-                                ->get();
-        return view('admin.pages.group_info', compact('group','std_detailes','teachers_detailes'));
+            ->select('teachers.name')
+            ->join('groups', 'teachers.id', '=', 'groups.instructor_id')
+            ->where('groups.id', '=', $id)
+            ->get();
+        return view('admin.pages.group_info', compact('group', 'std_detailes', 'teachers_detailes'));
     }
 
 
@@ -72,9 +94,9 @@ class AdminController extends Controller
         $obj->project_name = $req->project_name;
         $name = $req->instructor_name;
         $instructor_id = DB::table('teachers')
-                            ->select('id')
-                            ->where('name','=',$name)
-                            ->get();
+            ->select('id')
+            ->where('name', '=', $name)
+            ->get();
         // dd($name);
         $obj->instructor_id = $req->instructor_id;
 

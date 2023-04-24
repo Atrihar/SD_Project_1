@@ -26,6 +26,7 @@
                             <h6>Project Name:</h6>
                             <input type="text" name="project_name" class="form-control"
                                 value="{{ $group->project_name }}">
+                                <p></p>
                             <h6>Grade:</h6>
                             <input type="text" name="grade" class="form-control" value="{{ $group->grade }}">
 
