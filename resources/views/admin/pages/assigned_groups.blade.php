@@ -24,7 +24,7 @@
                                 @foreach ($users as $u)
                                     <tr>
                                         <td>{{ $u->name }}</td>
-                                        <td>{{ $u->instructor_id }}</td>
+                                        <td>{{ $u->tname }}</td>
                                         <td>{{ $u->grade }}</td>
                                         <td>{{ $u->project_name }}</td>
                                         <td>
@@ -35,7 +35,7 @@
                                             @endif
                                         </td>
 
-                                        <td><a href="{{ url('/assign_instructor/' . $u->id) }}" class="btn btn-info btn-sm"
+                                        <td><a href="{{ url('/group_info/' . $u->id) }}" class="btn btn-info btn-sm"
                                                 role="button">Edit</a></td>
                                         <td><a href="{{ url('/delete_group/' . $u->id) }}" class="btn btn-danger btn-sm"
                                                 role="button">Delete</a></td>

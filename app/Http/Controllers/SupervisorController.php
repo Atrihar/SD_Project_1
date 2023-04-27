@@ -161,7 +161,7 @@ class SupervisorController extends Controller
         $obj->due = $req->due;
         $obj->name = $req->name;
         $obj->ques = $req->ques;
-        dd($obj);
+        // dd($obj);
         // $obj->ans = 'NULL';
         // dd($obj);
         $obj->group_id = $id;

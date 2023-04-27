@@ -14,15 +14,20 @@
                     <p>
                         {{ $assignment_detailes[0]->ques }}
                     </p>
+                    <p>&nbsp;</p>
 
                     <h6>Attachment: </h6>
                     <p>{{ $assignment_detailes[0]->attachment }}</p>
 
                     <p>&nbsp;</p>
-                    <p>&nbsp;</p>
 
                     <h6>Ans: </h6>
-                    <p><a target="_blank" href="{{ asset('asset/' . $assignment_detailes[0]->ans) }}">File</a></p>
+                    <p><a target="_blank" href="{{ asset('asset/' . $assignment_detailes[0]->ans) }}"
+                            class="btn btn-rounded btn-dark btn-icon">
+                            <i class="ti-email">
+                                View
+                            </i>
+                        </a></p>
                 </div>
             </div>
         </div>

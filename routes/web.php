@@ -55,10 +55,12 @@ Route::middleware(['LoggedIn'])->group(function () {
         Route::get('admin/all_user', [AdminController::class, 'all_user']);
 
         // group's crud operation --> admin controller
+        Route::get('admin/assigned', [AdminController::class, 'assigned']);
         Route::get('admin/all_groups', [AdminController::class, 'all_groups']);
         Route::get('admin/approve/{userId}', [AdminController::class, 'approve']);
         Route::get('admin/group_approval/{userId}', [AdminController::class, 'group_approval']);
         Route::get('/group_info/{id}', [AdminController::class, 'group_info']);
+        Route::get('/assign_instructor/{id}', [AdminController::class, 'assign_instructor']);
         Route::post('/update_group/{id}', [AdminController::class, 'update_group']);
         Route::get('/delete_group/{id}', [AdminController::class, 'delete_group']);
 
@@ -96,7 +98,7 @@ Route::middleware(['LoggedIn'])->group(function () {
     });
 
     Route::get('signout', [AuthController::class, 'signout']);
-    Route::get('student_signout', [AuthController::class, 'student_signout']);
+    // Route::get('student_signout', [AuthController::class, 'student_signout']);
 });
 Route::get('supervisor/dashboard', [SupervisorController::class, 'dashboard']);
         Route::get('supervisor/student', [SupervisorController::class, 'student']);

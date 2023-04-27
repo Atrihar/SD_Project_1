@@ -35,11 +35,14 @@
       </a>
       <div class="collapse" id="Group">
         <ul class="nav flex-column sub-menu">
-          <li class="nav-item"><a class="nav-link" href="{{ url('admin/all_groups') }}">All Groups</a></li>
+          <li class="nav-item"><a class="nav-link" href="{{ url('admin/assigned') }}">Assigned</a></li>
+        </ul>
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"><a class="nav-link" href="{{ url('admin/all_groups') }}">Unassigned</a></li>
         </ul>
       </div>
     </li>
-    
+
     <li class="nav-item">
       <a class="nav-link" data-bs-toggle="collapse" href="#Admin" aria-expanded="false" aria-controls="Admin">
         <i class="menu-icon mdi mdi-account-plus"></i>

@@ -52,8 +52,22 @@ class AdminController extends Controller
 
     public function all_groups()
     {
-        $users = Group::all();
+        $users = DB::table('groups')
+            ->select('*')
+            ->whereNull('instructor_id')
+            ->get();
+        // dd($users);
         return view('admin.pages.all_groups', compact('users'));
+    }
+
+    public function assigned()
+    {
+        $users = DB::table('groups')
+            ->select('groups.id', 'groups.name', 'groups.grade', 'groups.project_name', 'groups.is_approved', 'teachers.name as tname')
+            ->join('teachers', 'groups.instructor_id', '=', 'teachers.id')
+            ->get();
+        // dd($users);
+        return view('admin.pages.assigned_groups', compact('users'));
     }
 
     // public function group_info($id, Request $req, $group , $std_detailes)
@@ -73,7 +87,26 @@ class AdminController extends Controller
             ->join('groups', 'teachers.id', '=', 'groups.instructor_id')
             ->where('groups.id', '=', $id)
             ->get();
+
+        // dd($teachers_detailes);
         return view('admin.pages.group_info', compact('group', 'std_detailes', 'teachers_detailes'));
+    }
+
+    public function assign_instructor($id, Request $req)
+    {
+        // get the group id
+        $group = Group::find($id);
+        $std_detailes = DB::table('students')
+            ->select('*')
+            ->join('group_members', 'students.id', '=', 'group_members.s_id')
+            ->join('groups', 'groups.id', '=', 'group_members.group_id')
+            ->where('groups.id', '=', $id)
+            ->get();
+        // dd($std_detailes);
+        $teacher = Teacher::select('id','name')->get();
+
+        // dd($teacher);
+        return view('admin.pages.assign_instructor', compact('group', 'std_detailes', 'teacher'));
     }
 
 
@@ -107,7 +140,10 @@ class AdminController extends Controller
 
     public function delete_group($id)
     {
-        Group::find($id)->delete();
+        // dd($id);
+        $x = (int)$id;
+        // dd(gettype($x));
+        Group::find($x)->delete();
         return redirect('admin/all_groups');
     }
 

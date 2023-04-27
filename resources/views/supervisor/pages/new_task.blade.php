@@ -24,10 +24,9 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="description" class="col-sm-3 col-form-label">Question</label>
+                            <label for="ques" class="col-sm-3 col-form-label">Question</label>
                             <div class="col-sm-9">
-                                <textarea name="" id="" cols="30" rows="30"class="form-control" name="ques" id="description"
-                                    placeholder="Description"></textarea>
+                                <input type="text" name="ques" id="ques" class="form-control">
                             </div>
                         </div>
                         <div class="form-group row">

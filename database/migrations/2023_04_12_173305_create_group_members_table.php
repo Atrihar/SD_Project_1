@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('group_members', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('group_id');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->unsignedBigInteger('s_id');
-            $table->foreign('s_id')->references('id')->on('students');
+            $table->foreign('s_id')->references('id')->on('students')->onDelete('cascade');
             $table->timestamps();
         });
     }

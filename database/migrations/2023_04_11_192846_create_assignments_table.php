@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('group_id');
-            $table->foreign('group_id')->references('id')->on('groups');
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $table->string('name',100);
-            $table->text('ques');
+            $table->text('ques')->nullable();
             $table->string('attachment')->nullable();
-            $table->string('ans');
-            $table->date('due');
-            $table->date('submission');
+            $table->string('ans')->nullable();
+            $table->date('due')->nullable();
+            $table->date('submission')->nullable();
             $table->boolean('status')->default(0);
-            $table->string('grade',10);
+            $table->string('grade',10)->nullable();
             $table->timestamps();
         });
     }
