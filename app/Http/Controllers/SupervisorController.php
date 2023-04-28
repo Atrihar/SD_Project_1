@@ -55,16 +55,12 @@ class SupervisorController extends Controller
     public function completed(Request $req)
     {
         $id = $req->session()->get('userid');
-        // $dataset = [
-        //     DB::table('groups')
-        //     ->select('*')
-        //     ->where('instructor_id','=',$id)
-        //     ->get()
-        // ];
+
         $a = Group::where('instructor_id', '=', $id)
             ->where('grade', '!=', NULL)
             ->get();
         // dd($a);
+
         return view('supervisor.pages.completed', compact('a'));
     }
 
@@ -182,6 +178,19 @@ class SupervisorController extends Controller
             return redirect()->back();
         }
     }
+
+
+    public function check_assignment(Request $req, $id)
+    {
+        $obj = Assignment::find($id);
+        $obj->grade = $req->grade;
+        $obj->note = $req->note;
+        if ($obj->save()) {
+            return redirect()->back();
+        }
+    }
+
+
 
     public function view($id)
     {

@@ -108,6 +108,7 @@ Route::get('supervisor/running', [SupervisorController::class, 'running']);
 Route::get('supervisor/student', [SupervisorController::class, 'student']);
 Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
 Route::post('/crate_assignment/{id}', [SupervisorController::class, 'create_assignment']);
+Route::post('/check_assignment/{id}', [SupervisorController::class, 'check_assignment']);
 
 Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
 Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);

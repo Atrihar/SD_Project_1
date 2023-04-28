@@ -18,11 +18,13 @@ return new class extends Migration
             $table->string('name',100);
             $table->text('ques')->nullable();
             $table->string('attachment')->nullable();
+            $table->string('ansr')->nullable();
             $table->string('ans')->nullable();
             $table->date('due')->nullable();
             $table->date('submission')->nullable();
             $table->boolean('status')->default(0);
             $table->string('grade',10)->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

@@ -23,33 +23,32 @@ class StudentController extends Controller
     {
         $id = $req->session()->get('userid');
         // dd($id);
-        $find = DB::table('group_members')
-            ->select('*')
-            ->where('s_id', '=', $id)
-            ->get();
-        // dd($find[0]->id);
-        if ($find[0]->id == true) {
+        $find = Group_member::find($id);
+        // dd($find);
 
-
+        if ($find) {
             $group = DB::table('group_members')
                 ->select('*')
                 ->where('s_id', '=', $id)
                 ->get();
+
             $g_id = $group[0]->group_id;
+
             $student_info = DB::table('students')
                 ->select('*')
                 ->join('group_members', 'students.id', '=', 'group_members.s_id')
                 ->where('group_members.group_id', '=', $g_id)
                 ->get();
             // dd($student_info);
+
             $group_name = DB::table('groups')
                 ->select('*')
                 ->where('id', '=', $g_id)
                 ->get();
             // dd($group_name);
+
             return view('student.pages.group', compact('student_info', 'group_name'));
-        }
-        else{
+        } else {
             return redirect('student/create_group');
         }
     }
@@ -57,15 +56,15 @@ class StudentController extends Controller
     public function assignment(Request $req)
     {
         $id = $req->session()->get('userid');
-        // $id = 5;
 
         $assignment_info = DB::table('assignments')
-            ->select('*')
+            ->select('assignments.id', 'assignments.group_id', 'assignments.name', 'assignments.ques', 'assignments.attachment', 'assignments.ans', 'assignments.due', 'assignments.submission', 'assignments.grade', 'assignments.status')
             ->join('group_members', 'assignments.group_id', '=', 'group_members.group_id')
             ->where('group_members.s_id', '=', $id)
             ->get();
 
         // dd($id);
+        // dd($assignment_info);
         return view('student.pages.assignment', compact('assignment_info'));
     }
 
@@ -163,17 +162,20 @@ class StudentController extends Controller
     public function submit_assignment($id, Request $req)
     {
         $obj = Assignment::find($id);
+
         $file = $req->file('ans');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        // dd($filename);
-        // $req->move(public_path('asset'), $filename);
-        // $req->file->move('asset',$filename);
-        $filePath = public_path() . '/asset/';
-        $file->move($filePath, $filename);
+        if ($file) {
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            // dd($filename);
+            $filePath = public_path() . '/asset/';
+            $file->move($filePath, $filename);
+            $obj->ans = $filename;
+        }
 
-        // echo $req->file()->storeAs('public/update',$filename);
-
-        $obj->ans = $filename;
+        $ansr = $req->ansr;
+        if ($ansr) {
+            $obj->ansr = $ansr;
+        }
         $obj->submission = now();
 
         if ($obj->save()) {

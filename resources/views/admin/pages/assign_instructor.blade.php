@@ -15,7 +15,6 @@
                             </div>
                         </div>
                         <div>
-                            <p>&nbsp;</p>
                             <h6>Group Instrucor: </h6>
                             <div class="form-group">
                                 <select name="instructor_id" id="" class="form control">
@@ -24,7 +23,6 @@
                                         <option value="{{ $t->id }}">{{ $t->name }}</option>
                                     @endforeach
                                 </select>
-                                {{-- <input type="text" name="instructor_name" class="form-control"> --}}
                             </div>
                         </div>
                         <div class="form-group">

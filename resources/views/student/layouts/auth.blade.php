@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    @include('student.includes.head')
+    @include('admin.includes.head')
 </head>
 
 <body>
