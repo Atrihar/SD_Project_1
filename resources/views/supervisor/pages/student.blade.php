@@ -13,6 +13,7 @@
                   <tr>
                     <th>ID</th>
                     <th>Name</th>
+                    <th>Group Name</th>
                     <th>Email</th>
                     <th>Contact No</th>
                     <th>Batch</th>
@@ -25,6 +26,7 @@
                         <tr>
                             <td>{{ $u->std_ID }}</td>
                             <td>{{ $u->name }}</td>
+                            <td>{{ $u->group_name }}</td>
                             <td>{{ $u->email }}</td>
                             <td>{{ $u->contact_no }}</td>
                             <td>{{ $u->batch }}</td>

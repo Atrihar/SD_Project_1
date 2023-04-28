@@ -98,20 +98,20 @@ Route::middleware(['LoggedIn'])->group(function () {
     });
 
     Route::get('signout', [AuthController::class, 'signout']);
-    // Route::get('student_signout', [AuthController::class, 'student_signout']);
+
 });
 Route::get('supervisor/dashboard', [SupervisorController::class, 'dashboard']);
-        Route::get('supervisor/student', [SupervisorController::class, 'student']);
-        Route::get('supervisor/group_info', [SupervisorController::class, 'group_info']);
-        Route::get('supervisor/completed', [SupervisorController::class, 'completed']);
-        Route::get('supervisor/running', [SupervisorController::class, 'running']);
-        Route::get('supervisor/student', [SupervisorController::class, 'student']);
-        Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
-        Route::post('/crate_assignment/{id}', [SupervisorController::class, 'create_assignment']);
+Route::get('supervisor/student', [SupervisorController::class, 'student']);
+Route::get('supervisor/group_info', [SupervisorController::class, 'group_info']);
+Route::get('supervisor/completed', [SupervisorController::class, 'completed']);
+Route::get('supervisor/running', [SupervisorController::class, 'running']);
+Route::get('supervisor/student', [SupervisorController::class, 'student']);
+Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
+Route::post('/crate_assignment/{id}', [SupervisorController::class, 'create_assignment']);
 
-        Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
-        Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);
-        Route::get('/assignment_info/{id}', [SupervisorController::class, 'assignment_info']);
-        // Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
+Route::get('/completed_group_info/{id}', [SupervisorController::class, 'completed_group_info']);
+Route::get('/running_group_info/{id}', [SupervisorController::class, 'running_group_info']);
+Route::get('/assignment_info/{id}', [SupervisorController::class, 'assignment_info']);
+// Route::get('/new_task/{id}', [SupervisorController::class, 'new_task']);
 
-        Route::get('/view_ans/{id}', [SupervisorController::class, 'view']);
+Route::get('/view_ans/{id}', [SupervisorController::class, 'view']);

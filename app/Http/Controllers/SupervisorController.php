@@ -37,12 +37,12 @@ class SupervisorController extends Controller
         $ins_id = $req->session()->get('userid');
         // dd($ins_id);
         $std_detailes = DB::table('students')
-                                ->select('students.std_ID', 'students.name', 'students.email', 'students.contact_no', 'students.batch')
-                                ->join('group_members','students.id','=','group_members.s_id')
-                                ->join('groups','group_members.group_id','=','groups.id')
-                                ->join('teachers','groups.instructor_id','=','teachers.id')
-                                ->where('teachers.id','=',$ins_id )
-                                ->get();
+            ->select('students.std_ID', 'students.name', 'students.email', 'students.contact_no', 'students.batch', 'groups.name as group_name')
+            ->join('group_members', 'students.id', '=', 'group_members.s_id')
+            ->join('groups', 'group_members.group_id', '=', 'groups.id')
+            ->join('teachers', 'groups.instructor_id', '=', 'teachers.id')
+            ->where('teachers.id', '=', $ins_id)
+            ->get();
         // dd($std_detailes);
         return view('supervisor.pages.student', compact('std_detailes'));
     }
@@ -88,46 +88,55 @@ class SupervisorController extends Controller
     {
         $group = Group::find($id);
         // dd($group);
-        return view('supervisor.pages.new_task',compact('group'));
+        return view('supervisor.pages.new_task', compact('group'));
     }
 
 
     public function completed_group_info($id, Request $req)
     {
         $group = Group::find($id);
-        // $$id = str_replace(
-        //     ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
-        //     "",
-        //     $std_id
-        // );
+
         $x = (int)$id;
-        // dd(gettype($x));
+
         $assignment = DB::table('assignments')
             ->select('*')
             ->where('group_id', '=', $x)
             ->get();
-        // dd($assignment);
+
+        $student = DB::table('students')
+            ->select('students.std_ID', 'students.name', 'students.email', 'students.contact_no', 'students.batch')
+            ->join('group_members', 'students.id', '=', 'group_members.s_id')
+            ->where('group_members.group_id', '=', $x)
+            ->get();
+
+        // dd($student);
         // dd($id);
-        return view('supervisor.pages.complete_assignment', compact('assignment'));
+        // dd($assignment);
+        // dd(gettype($x));
+
+        return view('supervisor.pages.complete_assignment', compact('assignment', 'student', 'group'));
     }
 
     public function running_group_info($id, Request $req)
     {
         $group = Group::find($id);
-        // $$id = str_replace(
-        //     ['"', '[', ']', '{', '}', ':', '(', ')', 's', '_', 'i', 'd'],
-        //     "",
-        //     $std_id
-        // );
+        // dd($group);
+
         $x = (int)$id;
-        // dd(gettype($x));
+
         $assignment = DB::table('assignments')
             ->select('*')
             ->where('group_id', '=', $x)
             ->get();
-        // dd($assignment);
-        // dd($id);
-        return view('supervisor.pages.running_assignment', compact('assignment','x'));
+
+        $student = DB::table('students')
+            ->select('students.std_ID', 'students.name', 'students.email', 'students.contact_no', 'students.batch')
+            ->join('group_members', 'students.id', '=', 'group_members.s_id')
+            ->where('group_members.group_id', '=', $x)
+            ->get();
+
+
+        return view('supervisor.pages.running_assignment', compact('assignment', 'x', 'student', 'group'));
     }
 
 
@@ -149,15 +158,18 @@ class SupervisorController extends Controller
 
     // }
 
-    public function create_assignment(Request $req, $id){
+    public function create_assignment(Request $req, $id)
+    {
         $obj = new Assignment;
 
         $file = $req->attachment;
-        $filename = time().'.'.$file->getClientOriginalExtension();
-        $filePath = public_path().'/asset/';
-        $file->move($filePath,$filename);
+        if ($file) {
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = public_path() . '/asset/';
+            $file->move($filePath, $filename);
+            $obj->attachment = $filename;
+        }
         $obj->group_id = $id;
-        $obj->attachment = $filename;
         $obj->due = $req->due;
         $obj->name = $req->name;
         $obj->ques = $req->ques;
@@ -167,14 +179,14 @@ class SupervisorController extends Controller
         $obj->group_id = $id;
         // dd($id);
         if ($obj->save()) {
-            return redirect('/running_group_info');
+            return redirect()->back();
         }
     }
 
-    public function view($id){
+    public function view($id)
+    {
         $data = Assignment::find($id);
         // dd($data);
-        return view('supervisor.pages.view-ans',compact('data'));
+        return view('supervisor.pages.view-ans', compact('data'));
     }
-
 }
